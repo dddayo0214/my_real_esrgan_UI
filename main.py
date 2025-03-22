@@ -212,12 +212,13 @@ class ImageProcessorApp:
 
     def save_dir(self):
         file_path = filedialog.askdirectory()
-        if file_path:
-            i = 0
-            for img in self.processed_dir:
-                img.save(join(file_path, f"{self.original_dirname[i]}_output.png"))
-                i = i + 1
-            messagebox.showinfo("保存成功", "資料夾已成功保存！")
+        if not file_path:
+            file_path = "D:\alan_program\aia\outputs"
+        i = 0
+        for img in self.processed_dir:
+            img.save(join(file_path, f"{self.original_dirname[i]}_output.png"))
+            i = i + 1
+        messagebox.showinfo("保存成功", "資料夾已成功保存！")
 
 if __name__ == "__main__":
     root = tk.Tk()
