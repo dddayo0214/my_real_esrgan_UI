@@ -13,7 +13,7 @@ import numpy as np
 import cv2
 import threading
 from os import listdir
-from os.path import isfile, isdir, join
+from os.path import join
 
 class ImageProcessorApp:
     def __init__(self, root):
@@ -32,7 +32,7 @@ class ImageProcessorApp:
                 messagebox.showerror("錯誤", f"模型權重檔案不存在: {weight_path}")
                 sys.exit(1)
 
-            state_dict = torch.load(weight_path, map_location=torch.device('cpu'))['params_ema']
+            state_dict = torch.load(weight_path, map_location=torch.device('cpu'), weights_only=True)['params_ema']
             model.load_state_dict(state_dict, strict=True)
 
             ImageProcessorApp.model = RealESRGANer(
@@ -213,7 +213,7 @@ class ImageProcessorApp:
     def save_dir(self):
         file_path = filedialog.askdirectory()
         if not file_path:
-            file_path = "D:\alan_program\aia\outputs"
+            file_path = "D:\\alan_program\\my_real_esrgan_UI\\outputs"
         i = 0
         for img in self.processed_dir:
             img.save(join(file_path, f"{self.original_dirname[i]}_output.png"))
